@@ -1,0 +1,3 @@
+D:/Alexey/CLionProjects/Brackets_Checker/cmake-build-debug/CMakeFiles/Brackets_Checker.dir
+D:/Alexey/CLionProjects/Brackets_Checker/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Alexey/CLionProjects/Brackets_Checker/cmake-build-debug/CMakeFiles/rebuild_cache.dir
