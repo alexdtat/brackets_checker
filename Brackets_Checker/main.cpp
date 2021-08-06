@@ -82,6 +82,6 @@ int main()
     if (result == 1) cout << "BRACKETS ARE CORRECT!";
     if (result == 0) cout << "BRACKETS ARE NOT CORRECT!";
 
-    delete *user_text;
+    delete user_text;
     return 0;
 }
