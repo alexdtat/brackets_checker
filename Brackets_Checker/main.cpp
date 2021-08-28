@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -8,21 +9,20 @@ using namespace std;
  * then call the function recursively, remembering the type of the opening bracket, and read it
  * until we find a closing brackets, the type of which is comparable to the stored one,
  * or until we go beyond the text boundaries*/
-void secondary_are_brackets_correct (bool &are_correct, char *text, int size, int &position, char brackets_type){
-    char buffer;
+void secondary_are_brackets_correct (bool &are_correct, string text, int &position, char brackets_type){
+    int size = text.size();
     while ((are_correct == 1) && (position < size) && (text[position] != ')') && (text[position] != ']') && (text[position] != '}')){
-        //cout << position << '\t' << brackets_type << '\t' << are_correct << '\n';
         switch (text[position]) {
             case '(':{
-                secondary_are_brackets_correct(are_correct, text, size, ++position, '(');
+                secondary_are_brackets_correct(are_correct, text, ++position, '(');
                 break;
             }    
             case '[':{
-                secondary_are_brackets_correct(are_correct, text, size, ++position, '[');
+                secondary_are_brackets_correct(are_correct, text, ++position, '[');
                 break;
             }    
             case '{':{
-                secondary_are_brackets_correct(are_correct, text, size, ++position, '{');
+                secondary_are_brackets_correct(are_correct, text, ++position, '{');
                 break;
             }    
             default:{
@@ -38,17 +38,17 @@ void secondary_are_brackets_correct (bool &are_correct, char *text, int size, in
         if ((text[position] == ']') && (brackets_type != '[')) are_correct = 0;
         if ((text[position] == '}') && (brackets_type != '{')) are_correct = 0;
     }
-    //cout << position << '\t' << brackets_type << '\t' << are_correct << '\n';
 }
 
 /*check that each opening bracket is followed by its corresponding closing and then call a secondary recursive check;
  * return the result*/
-bool primary_are_brackets_correct (char *user_text, int text_size, char brackets_type){
+bool primary_are_brackets_correct (string user_text, char brackets_type){
     bool are_correct = 1;
     int cur_position = 0;
     int sqr_counter = 0;
     int rnd_counter = 0;
     int crl_counter = 0;
+    int text_size = user_text.size();
 
     for (int i = 0; i < text_size; i++){
         if (user_text[i] == '(') rnd_counter++;
@@ -61,7 +61,7 @@ bool primary_are_brackets_correct (char *user_text, int text_size, char brackets
     }
     if ((rnd_counter > 0) || (sqr_counter > 0) || (crl_counter > 0)) are_correct = 0;
 
-    secondary_are_brackets_correct(are_correct, user_text, text_size, cur_position, '-');
+    secondary_are_brackets_correct(are_correct, user_text, cur_position, '-');
 
     return are_correct;
 }
@@ -69,19 +69,15 @@ bool primary_are_brackets_correct (char *user_text, int text_size, char brackets
 
 int main()
 {
-    int text_size;
     bool result;
-    char *user_text = new char[text_size];
+    string user_text;
 
-    cout << "Please, input size of your text:\n";
-    cin >> text_size;
     cout << "Please, input your text:\n";
-    cin >> user_text;
+    getline(cin, user_text);
 
-    result = primary_are_brackets_correct(user_text, text_size, '-');
+    result = primary_are_brackets_correct(user_text, '-');
     if (result == 1) cout << "BRACKETS ARE CORRECT!";
     if (result == 0) cout << "BRACKETS ARE NOT CORRECT!";
 
-    delete [] user_text;
     return 0;
 }
